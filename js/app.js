@@ -1,5 +1,5 @@
 console.log("hello");
-tasks = [];
+let tasks = [];
 // this holds all tasks
 class Task{
     constructor(name){
@@ -35,15 +35,20 @@ const render = () => {
     // clear the existing stuff
     $('.task').remove();
     // put tasks from task array into the divs
-    tasks.forEach(function(task){
+    tasks.forEach(function(task, index){
         // create the div for the task, with a button
         const $taskDiv = $(`<div class="task"><p>${task.name}</p></div>`)
         const $taskButton = $('<button/>').click(()=>{
             toggleTask(task)
         })
+        const $deleteButton = $('<button>DELETE</button>').click(()=>{
+            tasks.splice(index, 1);
+            render();
+        })
         setButtonText(task, $taskButton)
         // put the button in the div
         $taskDiv.append($taskButton);
+        $taskDiv.append($deleteButton);
         // put the div on the page
          // if a task is not complete, put it in the pending div
          putTaskOnPage(task, $taskDiv);
@@ -62,3 +67,28 @@ const addTask = (e) => {
     render();
 }
 $('#add-task').on('click', addTask)
+
+$('.clear-pending').click(()=>{
+    for(let i = 0; i < tasks.length; i++){
+        if(!tasks[i].complete){
+            tasks.splice(i, 1);
+            i--;
+        }
+    }
+    // The advanced one is below
+    // it is too much power for beginners to handle
+    // tasks = tasks.filter(task => task.complete)
+    render();
+})
+$('.clear-done').click(()=>{
+    for(let i = 0; i < tasks.length; i++){
+        if(tasks[i].complete){
+            tasks.splice(i, 1);
+            i--;
+        }
+    }
+    // The advanced one is below
+    // it is too much power for beginners to handle
+    // tasks = tasks.filter(task => !task.complete)
+    render();
+})
