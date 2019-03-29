@@ -1,0 +1,14 @@
+.pending, .done {
+    border: 2px solid black;
+    min-height: 500px;
+    display: inline-block;
+    width: 48%;
+    text-align: center;
+    vertical-align: top;
+}
+.task p, .task button {
+    display: inline-block;
+}
+.task p {
+    margin-right: 20px;
+}
